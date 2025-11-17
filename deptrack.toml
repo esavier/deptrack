@@ -1,0 +1,15 @@
+# test configuration - make missing changelogs a warning instead of error
+
+[direct_severity]
+missing_changelog = "warning"
+missing_version_entry = "warning"
+changelog_not_updated = "warning"
+bad_format = "error"
+no_version_bump = "error"
+
+[transitive_severity]
+missing_changelog = "warning"
+missing_version_entry = "warning"
+changelog_not_updated = "warning"
+bad_format = "warning"
+no_version_bump = "warning"

@@ -1,0 +1,48 @@
+# deptrack configuration file
+# place this file as 'deptrack.toml' in your repository root
+
+[changelog]
+# changelog file name to look for in each crate directory
+file_name = "CHANGELOG.md"
+
+# whether a changelog is required
+require_changelog = true
+
+# whether to enforce changelog format (common-changelog style)
+enforce_format = true
+
+# list of allowed change types in changelog entries
+allowed_change_types = ["feat", "fix", "chore", "docs", "style", "refactor", "perf", "test"]
+
+# whether scope is required in changelog entries
+require_scope = false
+
+# whether to check if changelog was updated when crate was modified
+check_changelog_updated = true
+
+# whether to allow missing changelogs for transitive dependencies
+allow_missing_for_transitive = true
+
+# severity configuration for direct dependencies
+# these are crates that were directly modified
+[direct_severity]
+missing_changelog = "error"         # error if changelog file is missing
+missing_version_entry = "warning"   # warning if current version has no changelog entry
+changelog_not_updated = "warning"   # warning if crate was modified but changelog wasn't
+bad_format = "error"                # error if changelog has invalid format
+no_version_bump = "error"           # error if version wasn't bumped when crate was modified
+
+# severity configuration for transitive dependencies
+# these are crates that depend on directly modified crates
+[transitive_severity]
+missing_changelog = "warning"       # warning if changelog file is missing
+missing_version_entry = "warning"   # warning if current version has no changelog entry
+changelog_not_updated = "warning"   # warning if crate depends on modified crate
+bad_format = "warning"              # warning if changelog has invalid format
+no_version_bump = "warning"         # warning if version wasn't bumped
+
+# notes:
+# - "error" severity will cause check-versions to exit with code 1
+# - "warning" severity is informational only
+# - use --skip-changelog flag to disable changelog checking
+# - use --all-crates flag to check all crates (not just changed ones)
